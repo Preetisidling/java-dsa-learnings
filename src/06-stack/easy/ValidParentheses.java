@@ -1,0 +1,38 @@
+/**
+ * Problem: Check if a string of brackets is valid (properly opened and closed).
+ *
+ * Approach: Use a stack.
+ *   - Push opening brackets.
+ *   - On closing bracket, check if it matches the top of stack.
+ *   - Valid if stack is empty at the end.
+ *
+ * Time: O(n) | Space: O(n)
+ */
+import java.util.*;
+
+public class ValidParentheses {
+
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) return false;
+                char top = stack.pop();
+                if (c == ')' && top != '(') return false;
+                if (c == '}' && top != '{') return false;
+                if (c == ']' && top != '[') return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isValid("(){}[]"));   // true
+        System.out.println(isValid("({[]})"));   // true
+        System.out.println(isValid("(]"));       // false
+        System.out.println(isValid("([)]"));     // false
+    }
+}
